@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRoutes } from "hookrouter";
 import Routers from "./routers";
+import Hooks from "./hooks";
 
 import "./style.css";
 
 const Header = () => {
-  return <header>Naglowek</header>;
+  const formularzKontaktowy = Hooks.useFormularzKontaktowy();
+
+  return (
+    <header>
+      <h1>Naglowek</h1>
+      <h2>Witaj {formularzKontaktowy.kontaktImie}</h2>
+    </header>
+  );
 };
 
 const Nav = () => {
@@ -23,15 +31,15 @@ const Main = props => {
   return <main>{routeResult}</main>;
 };
 
-const Aside = ({ title, name }) => {
+const Aside = () => {
   return <aside>marketing</aside>;
 };
 
 const Footer = () => {
-  return <footer> Stopka</footer>;
+  return <footer>stopka</footer>;
 };
 
-export default function App() {
+export default () => {
   return (
     <>
       <Header />
@@ -41,4 +49,4 @@ export default function App() {
       <Footer />
     </>
   );
-}
+};

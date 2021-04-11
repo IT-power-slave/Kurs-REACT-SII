@@ -5,9 +5,13 @@ import "./FormularzKontaktowy.css";
 const FormularzKontaktowy = () => {
   const formularzKontaktowy = Hooks.useFormularzKontaktowy();
   /*
-  const [kontaktImie, setKontaktImie] = useState("Jan");
-  const [kontaktNazwisko, setKontaktNazwisko] = useState("Kowalski");
-  const [kontaktEmail, setKontaktEmail] = useState();
+  const [kontaktImie, setKontaktImie] = useState("John");
+  const [kontaktNazwisko, setKontaktNazwisko] = useState("Kowalsky");
+  const [kontaktEmail, setKontaktEmail] = useState("test@test.pola");
+
+  console.log(kontaktImie);
+  console.log(kontaktNazwisko);
+  console.log(kontaktEmail);
 */
 
   console.log(formularzKontaktowy.clickSubmit);
@@ -18,52 +22,53 @@ const FormularzKontaktowy = () => {
       className="formularzKontaktowy"
       onSubmit={formularzKontaktowy.onClickSubmit}
     >
-      <h1>Formularz Kontaktowy</h1>
+      <h1>Formularz kontaktowy</h1>
       <fieldset>
         <legend>Dane kontaktowe</legend>
-        <label type="text">Podaj imię:</label>
+        <label>Podaj imie:</label>
         <input
           id="imie"
           type="text"
           name="Imie"
-          required
-          minLength="4"
-          maxLength="20"
           value={formularzKontaktowy.kontaktImie}
           onChange={formularzKontaktowy.onChangeImie}
         />
+
+        <label>Podaj nazwisko:</label>
         <input
           id="nazwisko"
           type="text"
           name="Nazwisko"
-          required
-          minLength="4"
-          maxLength="20"
           value={formularzKontaktowy.kontaktNazwisko}
           onChange={formularzKontaktowy.onChangeNazwisko}
         />
+        <label>Podaj email:</label>
         <input
-          id="imie"
-          type="text"
-          name="Imie"
-          required
-          minLength="4"
-          maxLength="20"
+          id="email"
+          type="email"
+          name="Email"
           value={formularzKontaktowy.kontaktEmail}
           onChange={formularzKontaktowy.onChangeEmail}
+          required
         />
 
+        <div className="walidator">Niepoprawna wartosc dla pola imie</div>
+      </fieldset>
+      <fieldset>
         <legend>Zgody marketingowe</legend>
-        <legend>Zgody RODO</legend>
-        <button type="submit">Wyślij </button>
+      </fieldset>
+      <fieldset>
+        <legend>Zgody na przetwarzanie RODO</legend>
+      </fieldset>
+      <fieldset>
+        <button type="submit">Wyślij</button>
         <button type="reset">Wyczyść</button>
       </fieldset>
     </form>
   ) : (
-    <selection>
-      {" "}
-      <h2> Dzięki za wysłanie. </h2>{" "}
-    </selection>
+    <section>
+      <h2>Dziękujemy za wysłanie formularza.</h2>
+    </section>
   );
 };
 

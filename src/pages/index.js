@@ -4,5 +4,6 @@ import Kontakt from "./Kontakt";
 
 export default {
   StronaGlowna: StronaGlowna,
-  Kontakt: Kontakt
+  Kontakt: Kontakt,
+  Aktualnosci: StronaGlowna
 };

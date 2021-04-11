@@ -1,5 +1,4 @@
-import React, { useReducer, useState, useEffect } from "react";
-import Hooks from "../hooks";
+import { useReducer, useEffect } from "react";
 
 const initialState = {
   clickSubmit: false,
@@ -15,6 +14,18 @@ const actions = {
   CHANGE_EMAIL: "CHANGE_EMAIL"
 };
 
+const updateStateRepository = state => {
+  var currentStateJSON = JSON.stringify(state);
+  var currentStateObject = initialState;
+
+  localStorage.setItem("STORAGE", JSON.stringify(currentStateJSON));
+  currentStateObject = JSON.parse(localStorage.getItem("STORAGE"));
+
+  return {
+    ...currentStateObject
+  };
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case actions.CLICK_SUBMIT:
@@ -22,55 +33,91 @@ const reducer = (state, action) => {
         ...state,
         clickSubmit: !state.clickSubmit
       };
-    case actrions.CHANGE_IMIE:
+
+    case actions.CHANGE_IMIE:
       return {
         ...state,
         kontaktImie: action.payload
       };
 
-    case actrions.CHANGE_NAZWISKO:
-      return {
+    case actions.CHANGE_NAZWISKO:
+      return updateStateRepository({
         ...state,
-        kontaktNazwisko: ""
-      };
+        kontaktNazwisko: action.payload
+      });
 
-    case actrions.CHANGE_EMAIL:
+    case actions.CHANGE_EMAIL:
       return {
         ...state,
-        kontaktEmail: ""
+        kontaktEmail: action.payload
       };
 
     default:
-      throw new Error("reducer error!");
+      throw new Error(
+        "useFormularzKontaktowy reducer error - action not supported."
+      );
   }
 };
-
 export const useFormularzKontaktowy = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  /*
+  const repository = window.sessionStorage;
 
-  console.log("sfsdfsdf");
+  var useFormularzKontaktowyState = initialState;
+
+  if (!repository.getItem("STORAGE_USE_FORMULARZ_KONTAKTOWY")) {
+    repository.setItem(
+      "STORAGE_USE_FORMULARZ_KONTAKTOWY",
+      JSON.stringify(initialState)
+    );
+  } else {
+    useFormularzKontaktowyState = JSON.parse(
+      repository.getItem("STORAGE_USE_FORMULARZ_KONTAKTOWY")
+    );
+  }
+  */
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const onClickSubmit = event => {
     event.preventDefault();
-    consloe.log("onClickSubmit");
-    dispatch({ type: action.CLICK_SUBMIT, payload: event });
+    console.log("onClickSubmit");
+
+    /*
+    const formData = new FormData(event.target);
+    var object = {};
+    formData.forEach((value, key) => (object[key] = value));
+    var json = JSON.stringify(object, ["Imie"]);
+
+    console.log(json);
+  */
+
+    dispatch({ type: actions.CLICK_SUBMIT, payload: event.target });
   };
+
   const onChangeImie = event => {
-    const imie = event.currentTarget.value;
     event.preventDefault();
-    consloe.log("onChangeImie");
-    dispatch({ type: action.CHANGE_IMIE, payload: event });
+
+    console.log("onChangeImie");
+
+    const imie = event.target.value;
+
+    dispatch({ type: actions.CHANGE_IMIE, payload: imie });
   };
+
   const onChangeNazwisko = event => {
     event.preventDefault();
-    consloe.log("onChangeNazwisko");
-    dispatch({ type: action.CHANGE_NAZWISKO, payload: event });
+    const nazwisko = event.target.value;
+
+    dispatch({ type: actions.CHANGE_NAZWISKO, payload: nazwisko });
   };
+
   const onChangeEmail = event => {
     event.preventDefault();
-    consloe.log("onChangeEmail");
-    dispatch({ type: action.CHANGE_EMAIL, payload: event });
+    const email = event.target.value;
+    dispatch({ type: actions.CHANGE_EMAIL, payload: email });
   };
+
+  //window.STAN = { ...state };
 
   return {
     ...state,
