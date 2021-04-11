@@ -1,0 +1,20 @@
+main {
+  color: green;
+}
+
+main::before {
+  content: "przed" attr(name) " ";
+  color: red;
+}
+
+main::after {
+  content: " " attr(xxx);
+}
+
+.kontent-glowny {
+  background-color: black;
+}
+
+main[xxx][yyy] {
+  color: yellow;
+}

@@ -1,0 +1,7 @@
+.formularzKontaktowy {
+  border: 1px solid red;
+}
+
+.formularzKontaktowy * {
+  border: 1px solid red;
+}
