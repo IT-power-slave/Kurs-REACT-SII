@@ -1,61 +1,69 @@
 import React, { useState } from "react";
-import "./formularzKontaktowy.css";
+import Hooks from "../hooks";
+import "./FormularzKontaktowy.css";
 
 const FormularzKontaktowy = () => {
+  const formularzKontaktowy = Hooks.useFormularzKontaktowy();
+  /*
   const [kontaktImie, setKontaktImie] = useState("Jan");
   const [kontaktNazwisko, setKontaktNazwisko] = useState("Kowalski");
   const [kontaktEmail, setKontaktEmail] = useState();
+*/
 
-  return (
-    <form id="formularzKontaktowy">
+  console.log(formularzKontaktowy.clickSubmit);
+
+  return !formularzKontaktowy.clickSubmit ? (
+    <form
+      id="formularzKontaktowy"
+      className="formularzKontaktowy"
+      onSubmit={formularzKontaktowy.onClickSubmit}
+    >
       <h1>Formularz Kontaktowy</h1>
       <fieldset>
         <legend>Dane kontaktowe</legend>
-        <label for="imie" type="text">
-          {" "}
-          Podaj imie:
-        </label>
+        <label type="text">Podaj imię:</label>
         <input
+          id="imie"
           type="text"
           name="Imie"
-          value={kontaktImie}
-          onChange={e => setKontaktImie(e.target.value)}
+          required
+          minLength="4"
+          maxLength="20"
+          value={formularzKontaktowy.kontaktImie}
+          onChange={formularzKontaktowy.onChangeImie}
         />
-        <label for="nazwisko" type="text">
-          {" "}
-          Podaj nazwisko:
-        </label>
         <input
+          id="nazwisko"
           type="text"
           name="Nazwisko"
-          value={kontaktNazwisko}
-          onChange={e => setKontaktNazwisko(e.target.value)}
+          required
+          minLength="4"
+          maxLength="20"
+          value={formularzKontaktowy.kontaktNazwisko}
+          onChange={formularzKontaktowy.onChangeNazwisko}
         />
-        <label for="email" type="text">
-          {" "}
-          Podaj email:
-        </label>
         <input
+          id="imie"
           type="text"
-          name="email"
-          value={kontaktEmail}
-          onChange={e => setKontaktEmail(e.target.value)}
+          name="Imie"
+          required
+          minLength="4"
+          maxLength="20"
+          value={formularzKontaktowy.kontaktEmail}
+          onChange={formularzKontaktowy.onChangeEmail}
         />
 
-      </fieldset>
-      <fieldset>
         <legend>Zgody marketingowe</legend>
-      </fieldset>
-      <fieldset>
         <legend>Zgody RODO</legend>
-      </fieldset>
-      <fieldset>
-        <button type="submit" value="Wyślij" />
+        <button type="submit">Wyślij </button>
         <button type="reset">Wyczyść</button>
-        <button type="button">Inna Akcja</button>
-        <input type="submit" value="Wyślij" />
       </fieldset>
     </form>
+  ) : (
+    <selection>
+      {" "}
+      <h2> Dzięki za wysłanie. </h2>{" "}
+    </selection>
   );
 };
 
